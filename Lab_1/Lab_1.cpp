@@ -6,33 +6,45 @@ using namespace std;
 
 static int Lab_1() {
     SetConsoleOutputCP(CP_UTF8);
-    char name1[9], name2[9], name3[9];
-    char sc1, sc2, sc3;
-    unsigned short cnt1, cnt2, cnt3;
-    float sq1, sq2, sq3;
-    cout << "1. Введіть: назву, школу, кількість, площу > ";
-    cin >> name1 >> sc1 >> cnt1 >> sq1;
-    cout << "2. Введіть: назву, школу, кількість, площу > ";
-    cin >> name2 >> sc2 >> cnt2 >> sq2;
-    cout << "3. Введіть: назву, школу, кількість, площу > ";
-    cin >> name3 >> sc3 >> cnt3 >> sq3;
-    cout << "-----------------------------------------------\n";
-    cout << "| Буддійські монастирі Японії періоду Нара     |\n";
-    cout << "|---------------------------------------------|\n";
-    cout << "|  Назва   | Школа | Кількість | Площа землі  |\n";
-    cout << "|          |       |  монахів  |    (га)      |\n";
-    cout << "|----------|-------|-----------|--------------|\n";
+    SetConsoleOutputCP(65001); // Увімкнути UTF-8 вивід
+    SetConsoleCP(65001);
+    char surname1[50], surname2[50], surname3[50];;
+    char initials1[50], initials2[50], initials3[50];
+    unsigned short year1, year2, year3;
+    float salary1, salary2, salary3;
+    cout << "1. Введіть: призвище, ініціали, рік народження, оклад > ";
+    cin >> surname1>>initials1>>initials1>> salary1;
+    cout << "2. Введіть: призвище, ініціали, рік народження, оклад > ";
+    cin >>surname2 >>initials2 >>year2 >> salary2 ;
 
-    cout << setw(11) << name1 << " | " << sc1 << " | " << setw(3) << cnt1
-    << " | " << setw(5) << fixed << setprecision(1) << sq1 << " | " << endl;
-    cout << setw(11) << name2 << " | " << sc2 << " | " << setw(3) << cnt2
-    << " | " << setw(5) << fixed << setprecision(1) << sq2 << " | " << endl;
-    cout << setw(11) << name3 << " | " << sc3 << " | " << setw(3) << cnt3
-    << " | " << setw(5) << fixed << setprecision(3) << sq3 << " | " << endl;
-    cout << "|---------------------------------------------|" << endl;
-    cout << "| Примітка: Т – Тендай; С – Сінгон;           |" << endl;
-    cout << "|           Д – Дзедзіцу                      |" << endl;
-    cout << "-----------------------------------------------" << endl;
+    cout << "3. Введіть: призвище, ініціали, рік народження, оклад > ";
+    cin >>surname3 >>initials3 >>year3 >> salary3 ;
+    cout << left ;
+    cout << "----------------------------------------------------\n";
+    cout << "| Відділ кадрів                                    |\n";
+    cout << "|--------------------------------------------------|\n";
+    cout << "|    Прізвище   |Ініціали|Рік народження|   Оклад  |\n";
+    cout << "|---------------|--------|--------------|----------|\n";
+
+    cout << "| " <<setw(21) << surname1;
+    cout << "|" << setw(10)  << initials1;
+    cout << "|" << setw(14) << year1;
+    cout << "|" << setw(10) <<fixed<< setprecision(2) << salary1 << "|" << endl;
+
+    cout << "| " << setw(21)<< surname2;
+    cout << "|" << setw(10)  << initials2;
+    cout << "|" << setw(14)  << year2;
+    cout << "|" << setw(10)  <<fixed<< setprecision(2) << salary2 << "|" << endl;
+
+    cout << "| " << setw(22)<< surname3;
+    cout << " |" << setw(10) << initials3;
+    cout << "|" << setw(14) << year3;
+    cout << "|" << setw(10)<<fixed<< setprecision(2) << salary3 << "|" << endl;
+
+    cout << "|--------------------------------------------------|" << endl;
+    cout << "| Примітка: оклад встановлено станом на 1 січня    |" << endl;
+    cout << "| 2000 року                                        |" << endl;
+    cout << "----------------------------------------------------" << endl;
 
 
     return 0;
