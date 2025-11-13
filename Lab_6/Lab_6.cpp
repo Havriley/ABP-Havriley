@@ -5,38 +5,60 @@
 
 using namespace std;
 
-static int Lab_6()
+void initArr(int** Arr, short n)
 {
-    const int n = 9;
-    int matrix[n][n] = {0};
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            matrix[i][j] = rand() % 101 - 50;
+            Arr[i][j] = rand() % 101 - 50;
         }
     }
-
-    cout << "Початкова матриця:\n";
+}
+void printArr(int** Arr, short n)
+{
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++)
-            cout << setw(4) << matrix[i][j];
+            cout << setw(4) << Arr[i][j];
         cout << endl;
     }
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n - i; j++) {
-            int temp = matrix[i][j];
-            matrix[i][j] = matrix[n - 1 - j][n - 1 - i];
-            matrix[n - 1 - j][n - 1 - i] = temp;
+}
+void mirrorArr(int** Arr, short n)
+{
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            int temp = Arr[i][j];
+            Arr[i][j] = Arr[n - 1 - j][n - 1 - i];
+            Arr[n - 1 - j][n - 1 - i] = temp;
         }
     }
+}
 
-    cout << "\nСиметрія відносно побічної діагоналі:\n";
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cout << setw(4) << matrix[i][j];
-        }
-        cout << endl;
+
+static int Lab_6()
+{
+    short n;
+    cout<<"Введіть розмірність масиву: \n";
+    cin>>n;
+    if (n<=1)
+    {
+        cout<<"Матриця повина бути більше за 1. Введіть розмірність масиву: \n";
+        cin>>n;
     }
 
+    int** Arr = new int*[n];
+    for (int i = 0; i < n; i++)
+        Arr[i] = new int[n];
+
+    initArr(Arr, n);
+    cout<<"Початковий масив: \n";
+    printArr(Arr, n);
+    mirrorArr(Arr, n);
+    cout<<"Після розвороту на 180 градуів: \n";
+    printArr(Arr, n);
+
+
+    for (int i = 0; i<n; i++){
+        delete[] Arr[i];
+    }
+    delete[] Arr;
     return 0;
 }
