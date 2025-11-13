@@ -1,0 +1,18 @@
+//Test1
+#include <string>
+using namespace std;
+bool feast(string beast, string dish){
+
+
+  if ( beast[0] == dish[0] && beast[-1] == dish[-1] ){
+     cout << beast <<", " <<dish<< " ";
+    return true;
+  }
+  else
+   cout << beast <<", " <<dish<< " ";
+   return true;
+
+}//
+
+//Test2
+//
