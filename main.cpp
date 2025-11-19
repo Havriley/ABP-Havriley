@@ -4,7 +4,7 @@
 
 #include "Lab_1/Lab_1.cpp"
 #include "Lab_2_1/Lab_2_1.cpp"
-#include "Lab_2_2/Lab_2_2.cpp"
+
 #include "Lab_3/Lab_3.cpp"
 #include "Lab_4/Lab_4.cpp"
 #include "Lab_5/Lab_5.cpp"
@@ -38,12 +38,7 @@ int main() {
                 case 1:
                     Lab_2_1();
                     break;
-                case 2:
-                    Lab_2_2();
-                    break;
-                default:
-                    cout << "Лабораторної немає або значення введене не правильно" << endl;
-            }
+                            }
             break;
         case 3:
             Lab_3();
