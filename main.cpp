@@ -9,6 +9,7 @@
 #include "Lab_4/Lab_4.cpp"
 #include "Lab_5/Lab_5.cpp"
 #include "Lab_6/Lab_6.cpp"
+#include "Lab_7/Lab_7.cpp"
 #include "Lab_8/Lab_8.cpp"
 #include "Lab_9/Lab_9.cpp"
 #include "Lab_10/Lab_10.cpp"
@@ -55,6 +56,9 @@ int main() {
             break;
         case 6:
             Lab_6();
+            break;
+        case 7:
+            Lab_7();
             break;
         case 8:
             Lab_8();
