@@ -26,7 +26,7 @@ static void inputperson (persons person[], int &n) {
     }
 }
 
-static void printTable(const persons books[], int n) {
+static void printTable(const persons person[], int n) {
     cout << "---------------------------------------------------------\n";
     cout << "|                Фірми - виробники СУБД                 |\n";
     cout << "|-------------------------------------------------------|\n";
@@ -34,10 +34,10 @@ static void printTable(const persons books[], int n) {
     cout << "|--------------|----------|--------------|--------------|\n";
 
     for (int i = 0; i < n; i++) {
-        cout << "| " << setw(12) << books[i].name
-             << " | " << setw(8) << books[i].initials
-             << " | " << setw(11) << books[i].year
-             << " | " << setw(13) << books[i].salary
+        cout << "| " << setw(12) << person[i].name
+             << " | " << setw(8) << person[i].initials
+             << " | " << setw(11) << person[i].year
+             << " | " << setw(13) << person[i].salary
              << " |\n";
     }
     cout << "|-------------------------------------------------------|\n";
