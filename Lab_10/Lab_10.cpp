@@ -1,85 +1,77 @@
 #include <iostream>
-#include <fstream>
-#include <cstring>
+#include <string.h>
+
 using namespace std;
 
-class Carr {
-    char *name;
-    char korper;
-    unsigned int engine;
-    float speed;
+class otdel {
+    char *fam;
+    char *init;
+    unsigned int year;
+    float salary;
 
 public:
-    Carr() : name(nullptr), korper('\0'), engine(0), speed(0.0f) {}
-
-    void set(char *a, char b, unsigned int c, float d) {
-        name = new char[strlen(a) + 1];
-        strcpy(name, a);
-        korper = b;
-        engine = c;
-        speed = d;
+    otdel() {
+        fam = new char[1]; fam[0] = '\0';
+        init = new char[1]; init[0] = '\0';
+        year = 0;
+        salary = 0.0;
     }
 
-    void get(char *a, char &b, unsigned int &c, float &d) {
-        delete[] a;
-        a = new char[strlen(name) + 1];
-        strcpy(a, name);
-        b = korper;
-        c = engine;
-        d = speed;
+    ~otdel() {
+        delete[] fam;
+        delete[] init;
+    }
+
+    void set(char *f, char *i, unsigned int y, float s) {
+        delete[] fam;
+        fam = new char[strlen(f) + 1];
+        strcpy(fam, f);
+
+        delete[] init;
+        init = new char[strlen(i) + 1];
+        strcpy(init, i);
+
+        year = y;
+        salary = s;
+    }
+
+    void get(char *&f, char *&i, unsigned int &y, float &s) {
+        delete[] f;
+        f = new char[strlen(fam) + 1];
+        strcpy(f, fam);
+
+        delete[] i;
+        i = new char[strlen(init) + 1];
+        strcpy(i, init);
+
+        y = year;
+        s = salary;
     }
 
     void show() {
-        cout << "Назва автомобіля: " << name << endl;
-        cout << "Коробка передач: " << korper << endl;
-        cout << "Об'єм двигуна: " << engine << " см³" << endl;
-        cout << "Максимальна швидкість: " << speed << " км/год" << endl;
-    }
-
-    ~Carr() {
-        delete[] name;
+        cout << "| " << setw(20) << fam << "|"
+        << setw(10)  << init << "|"
+        << setw(14) << year << "|"
+        << setw(9) << salary << " |" << endl;
+        cout << "|--------------------------------------------------|\n";
     }
 };
 
-static int Lab_10() {
-    Carr car1;
+int Lab_10() {
+    otdel A, B, C;
 
-    char name[50];
-    char korper;
-    unsigned int engine;
-    float speed;
+    A.set((char*)"Иванов", (char*)"И.И.", 1975, 517.50);
+    B.set((char*)"Петренко", (char*)"П.П.", 1956, 219.10);
+    C.set((char*)"Паниковский", (char*)"М.С.", 1967, 300.00);
 
-    cout << "Введіть назву автомобіля: ";
-    cin.getline(name, 50);
-
-    cout << "Введіть тип коробки передач (1 - механіка, 2 - автомат): ";
-    cin >> korper;
-
-    cout << "Введіть об'єм двигуна (у см³): ";
-    cin >> engine;
-
-    cout << "Введіть максимальну швидкість (км/год): ";
-    cin >> speed;
-
-    car1.set(name, korper, engine, speed);
-
-    cout << "\nДані про автомобіль:" << endl;
-    car1.show();
-
-    char *retrieved_name = new char[50];
-    char retrieved_korper;
-    unsigned int retrieved_engine;
-    float retrieved_speed;
-
-    car1.get(retrieved_name, retrieved_korper, retrieved_engine, retrieved_speed);
-
-    cout << "\nОтримані дані про автомобіль:" << endl;
-    cout << "Назва: " << retrieved_name << endl;
-    cout << "Коробка передач: " << retrieved_korper << endl;
-    cout << "Об'єм двигуна: " << retrieved_engine << " см³" << endl;
-    cout << "Максимальна швидкість: " << retrieved_speed << " км/год" << endl;
-
-    delete[] retrieved_name;
+    cout << "----------------------------------------------------\n";
+    cout << "|                   Відділ кадрів                  |\n";
+    cout << "|--------------------------------------------------|\n";
+    cout << "|    Прізвище   |Ініціали|Рік народження|   Оклад  |\n";
+    cout << "|--------------------------------------------------|\n";
+    A.show();
+    B.show();
+    C.show();
 
     return 0;
 }
