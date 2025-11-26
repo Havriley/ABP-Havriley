@@ -1,18 +1,14 @@
 //Test1
-#include <string>
-using namespace std;
-bool feast(string beast, string dish){
-
-
-  if ( beast[0] == dish[0] && beast[-1] == dish[-1] ){
-     cout << beast <<", " <<dish<< " ";
-    return true;
-  }
-  else
-   cout << beast <<", " <<dish<< " ";
-   return true;
-
-}//
-
+//#include <string>
+//using namespace std;
+//bool feast(string beast, string dish){
+    return beast[0] == dish[0] and beast[beast.size()-1] == dish[dish.size()-1];
+//}
 //Test2
-//
+using namespace std;
+//unsigned int Cats(unsigned int start, unsigned int finish) {
+//    int a = finish - start;
+//    int b = a/3;
+//    int answer = b + (a - b*3);
+//    return answer;
+//  }
