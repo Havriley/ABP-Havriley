@@ -1,125 +1,207 @@
 #include <iostream>
+#include <iomanip>
 #include <fstream>
-#include <cstring>
+#include <string>
+#include <cstdio>
+#include "windows.h"
 using namespace std;
 
-struct Employee {
-    char lastname[50];
-    char initials[10];
-    int birth_year;
-    float salary;
+
+const string FILE_NAME = "C:\\Users\\admin\\Desktop\\input.txt";
+const string TEMP_FILE = "temp.txt";
+
+
+struct Component {
+    string surname;
+    string surname1;
+    int  year;
+    double money;
 };
 
-static fstream file;
 
-static void initf(const char *filename) {
-    file.open(filename, ios::in | ios::out | ios::binary | ios::app);
-    if (!file) {
-        cout << "Неможливо відкрити файл." << endl;
-        exit(1);
+
+void f_add() {
+
+    ofstream f(FILE_NAME, ios::app);
+
+    if (!f.is_open()) {
+        cout << "Помилка відкриття файлу!\n";
+        return;
     }
+
+    Component newComponent;
+    cout << "\n Додавання нового компоненту \n";
+    cout << "Прізвище (без пробілів, наприклад Белоус): ";
+    cin >> newComponent.surname;
+    cout << "Ініціали (наприклад І.І.): ";
+    cin >> newComponent.surname1;
+    cout << "Рік народження (наприклад від 1950 до 2025): ";
+    cin >> newComponent.year;
+    cout << "Оклад";
+    cin >> newComponent.money;
+
+
+
+    f << newComponent.surname << " "
+      << newComponent.surname1 << " "
+      << newComponent.year << " "
+      << newComponent.money << endl;
+
+    f.close();
+    cout << "Робітника успішно додано\n";
 }
 
-static void commit() {
-    if (file.is_open()) {
-        file.close();
+
+void fshow_all() {
+    ifstream f(FILE_NAME);
+
+    if (!f.is_open()) {
+        cout << "Файл порожній або не існує. Для початку додайте запис \n";
+        return;
     }
-}
 
-static void f_add(Employee *emp) {
-    file.seekp(0, ios::end);
-    file.write(reinterpret_cast<char*>(emp), sizeof(Employee));
-}
+    cout << "\n-----------------------------------------------------------\n";
+    cout << "| № | Прізвище        |ініціали  | Рік народення  | Оклад |\n";
+    cout << "|---|-----------------|----------|----------------|-------|\n";
 
-static int fcheck_number(int record_num) {
-    file.seekg(0, ios::end);
-    int total_records = file.tellg() / sizeof(Employee);
-    if (record_num < 0 || record_num >= total_records) {
-        return -1;
+    Component c;
+    int index = 1;
+
+
+    while (f >> c.surname >> c.surname1 >> c.year >> c.money) {
+        cout << "| " << setw(2) << left << index++
+             << "| " << setw(19) << c.surname
+             << "| " << setw(8) << c.surname1
+             << "| " << setw(12) << fixed << setprecision(3) << c.year
+             << "| " << setw(12) << c.money << "|\n";
     }
-    return 0;
+
+    cout << "-----------------------------------------------------------\n";
+    f.close();
 }
 
-static void fshow_1(int record_num) {
-    if (fcheck_number(record_num) == 0) {
-        Employee emp;
-        file.seekg(record_num * sizeof(Employee), ios::beg);
-        file.read(reinterpret_cast<char*>(&emp), sizeof(Employee));
 
-        cout << "Фамилия: " << emp.lastname
-             << ", Инициалы: " << emp.initials
-             << ", Год рождения: " << emp.birth_year
-             << ", Оклад: " << emp.salary << endl;
 
-    } else {
-        cout << "Невірний номер запису." << endl;
+void fshow_1(int searchId) {
+    ifstream f(FILE_NAME);
+    if (!f.is_open()) {
+        cout << "Файл не знайдено\n";
+        return;
     }
-}
 
-static void fshow_all() {
-    Employee emp;
-    file.seekg(0, ios::beg);
-    while (file.read(reinterpret_cast<char*>(&emp), sizeof(Employee))) {
-        cout << "Фамилия: " << emp.lastname
-             << ", Инициалы: " << emp.initials
-             << ", Год рождения: " << emp.birth_year
-             << ", Оклад: " << emp.salary << endl;
-    }
-}
+    Component c;
+    int currentId = 1;
+    bool found = false;
 
-static void fdel_item(int record_num) {
-    if (fcheck_number(record_num) == 0) {
-
-        fstream temp_file("temp.dat", ios::out | ios::binary);
-        Employee emp;
-
-        file.seekg(0, ios::beg);
-        int current_record = 0;
-
-        while (file.read(reinterpret_cast<char*>(&emp), sizeof(Employee))) {
-            if (current_record != record_num) {
-                temp_file.write(reinterpret_cast<char*>(&emp), sizeof(Employee));
-            }
-            current_record++;
+    while (f >> c.surname >> c.surname1 >> c.year >> c.money) {
+        if (currentId == searchId) {
+            cout << "\n Робітник №" << searchId << " \n";
+            cout << "Прівище    " << c.surname << "\n";
+            cout << "Ініціали   " << c.surname1 << "\n";
+            cout << "Рік нар.   " << c.year << "\n";
+            cout << "Оклад      " << c.money << "\n";
+            found = true;
+            break;
         }
+        currentId++;
+    }
 
-        file.close();
-        temp_file.close();
+    if (!found) {
+        cout << "Робітника із номером " << searchId << " не знайдено.\n";
+    }
+    f.close();
+}
 
-        remove("data.dat");
-        rename("temp.dat", "data.dat");
 
-        initf("data.dat");
+void fdel_item(int deleteId) {
+    ifstream in(FILE_NAME);
+    if (!in.is_open()) {
+        cout << "Файл не знайдено\n";
+        return;
+    }
 
+    ofstream out(TEMP_FILE);
+
+    Component c;
+    int currentId = 1;
+    bool deleted = false;
+
+
+    while (in >> c.surname >> c.surname1 >> c.year >> c.money) {
+        if (currentId != deleteId) {
+
+            out << c.surname << " "
+                << c.surname1 << " "
+                << c.year << " "
+                << c.money << endl;
+        } else {
+            deleted = true;
+        }
+        currentId++;
+    }
+
+    in.close();
+    out.close();
+
+
+    if (remove(FILE_NAME.c_str()) != 0) {
+        perror("Помилка видалення старого файлу");
+        return;
+    }
+
+
+    if (rename(TEMP_FILE.c_str(), FILE_NAME.c_str()) != 0) {
+        perror("Помилка перейменування тимчасового файлу");
+        return;
+    }
+    if (deleted) {
+        cout << "Робітника №" << deleteId << " успішно видалено\n";
     } else {
-        cout << "Невірний номер запису." << endl;
+        cout << "Робітник №" << deleteId << " не знайдено\n";
     }
 }
 
 int Lab_9() {
-    initf("data.dat");
 
-    Employee e1 = {"Иванов", "И.И.", 1975, 517.50};
-    Employee e2 = {"Петренко", "П.П.", 1956, 219.10};
-    Employee e3 = {"Паниковский", "М.С.", 1967, 300.00};
 
-    f_add(&e1);
-    f_add(&e2);
-    f_add(&e3);
+    SetConsoleOutputCP(CP_UTF8);
+    int choice;
+    while (true) {
+        cout << "\n  ГОЛОВНЕ МЕНЮ \n";
+        cout << "1 – Показати всіх робітників\n";
+        cout << "2 – Показати одного робітника\n";
+        cout << "3 – Додати робітника\n";
+        cout << "4 – Видалити робітника\n";
+        cout << "0 – Вихід\n";
+        cout << "Ваш вибір  ";
+        cin >> choice;
+        if (choice == 0) break;
 
-    cout << "Усі записи:" << endl;
-    fshow_all();
+        switch (choice) {
+        case 1:
+            fshow_all();
+            break;
+        case 2: {
+                int id;
+                cout << "Введіть номер робітника: ";
+                cin >> id;
+                fshow_1(id);
+                break;
+        }
+        case 3:
+            f_add();
+            break;
+        case 4: {
+                int id;
+                cout << "Введіть номер робітника для видалення: ";
+                cin >> id;
+                fdel_item(id);
+                break;
+        }
+        default:
+            cout << "Невірний вибір. Спробуйте ще раз.\n";
+        }
+    }
 
-    cout << "\nВиведення запису 1:" << endl;
-    fshow_1(1);
-
-    cout << "\nВидалення запису 1..." << endl;
-    fdel_item(1);
-
-    cout << "\nПісля видалення:" << endl;
-    fshow_all();
-
-    commit();
     return 0;
 }
-

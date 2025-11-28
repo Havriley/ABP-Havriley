@@ -49,8 +49,8 @@ public:
     }
 
     void show() {
-        cout << "| " << setw(20) << fam << "|"
-        << setw(10)  << init << "|"
+        cout << "| " << setw(14) << fam << "|"
+        << setw(8)  << init << "|"
         << setw(14) << year << "|"
         << setw(9) << salary << " |" << endl;
         cout << "|--------------------------------------------------|\n";
@@ -60,9 +60,9 @@ public:
 int Lab_10() {
     otdel A, B, C;
 
-    A.set((char*)"Иванов", (char*)"И.И.", 1975, 517.50);
-    B.set((char*)"Петренко", (char*)"П.П.", 1956, 219.10);
-    C.set((char*)"Паниковский", (char*)"М.С.", 1967, 300.00);
+    A.set((char*)"Ivanova", (char*)"I.I.", 1975, 517.50);
+    B.set((char*)"Petrenko", (char*)"P.P.", 1956, 219.10);
+    C.set((char*)"Panicovski", (char*)"M.S.", 1967, 300.00);
 
     cout << "----------------------------------------------------\n";
     cout << "|                   Відділ кадрів                  |\n";

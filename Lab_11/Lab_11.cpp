@@ -54,75 +54,40 @@ public:
 };
 
 
-class StudentWithGrades : public Student {
-
-    int grades[10];
-    int gradeCount;
-
-public:
-
-    StudentWithGrades() : Student() {
-        gradeCount = 0;
-    }
-
-
-    StudentWithGrades(string n, int a, string u, int* arr, int cnt)
-        : Student(n, a, u)
-    {
-        gradeCount = cnt;
-        for (int i = 0; i < cnt; i++)
-            grades[i] = arr[i];
-    }
-
-
-    StudentWithGrades(const StudentWithGrades& st) : Student(st) {
-        gradeCount = st.gradeCount;
-        for (int i = 0; i < gradeCount; i++)
-            grades[i] = st.grades[i];
-    }
-
-
-
-
-
-    void addGrade(int g) {
-        if (gradeCount < 10)
-            grades[gradeCount++] = g;
-        else
-            cout << "Масив оцінок переповнений!" << endl;
-    }
-
-
-    void printGrades() const {
-        cout << "Оцінки: ";
-        for (int i = 0; i < gradeCount; i++)
-            cout << grades[i] << " ";
-        cout << endl;
-    }
-
-
-    void printAll() const {
-        Student::printAll();
-        printGrades();
-    }
-};
-
 
 int Lab_11() {
 
-    Student s1("Юрій", 19, "КПІ");
+    Student s1("Юрій", 19, "КПІ\n");
     s1.printAll();
 
-    cout << "\n--- Студент з оцінками ---\n";
-
-    int arr[5] = { 90, 85, 75, 100, 80 };
-
-    StudentWithGrades s2("Марія", 20, "КНУ імені Шевченка", arr, 5);
+    Student s2("Марія", 20, "КНУ імені Шевченка\n");
     s2.printAll();
 
-    cout << "\nДодаємо оцінку 95:\n";
-    s2.addGrade(95);
-    s2.printGrades();
+    Student s3("Ігор", 18, "КНУ імені Шевченка\n");
+    s3.printAll();
+
+    cout << "--- Зміна імені ---\n";
+
+    Student s4("Юрій", 19, "КПІ");
+    s4.printAll();
+    cout << "Змінюємо ім'я на 'Олександр'\n";
+    s4.changeName("Олександр");
+    s4.printAll();
+    cout << "\n";
+
+    Student s5("Марія", 20, "КНУ імені Шевченка");
+    s5.printAll();
+    cout << "Змінюємо ім'я на 'Вераніка'\n";
+    s5.changeName("Вераніка");
+    s5.printAll();
+    cout << "\n";
+
+    Student s6("Ігор", 18, "КНУ імені Шевченка");
+    s6.printAll();
+    cout << "Змінюємо ім'я на 'Нікіта'\n";
+    s6.changeName("Нікіта");
+    s6.printAll();
+
 
     return 0;
 }
